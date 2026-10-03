@@ -1,0 +1,1 @@
+for windows activate: env_jobportal\Scripts\activate
