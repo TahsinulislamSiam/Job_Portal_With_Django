@@ -1,9 +1,9 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import AbstractUser
 
 
 
-class CustomeUser(AbstractBaseUser):
+class CustomUser(AbstractUser):
     ROLE_CHOICES = [
         ('employer','Employer'),
         ('seeker','Job Seeker'),
