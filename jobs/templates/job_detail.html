@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ job.title }} - JobPortal
+{% endblock %}
+
+
+{% block content %}
+
+<div class="detail-card">
+
+    <h1 class="detail-title">
+        {{ job.title }}
+    </h1>
+
+    <div class="detail-company">
+        {{ job.company_name }}
+    </div>
+
+
+    <div class="detail-meta">
+
+        <div class="meta-box">
+            📍 {{ job.location }}
+        </div>
+
+        <div class="meta-box">
+            💰 {{ job.salary }}
+        </div>
+
+        <div class="meta-box">
+            📅 {{ job.date_posted|date:"M d, Y" }}
+        </div>
+
+    </div>
+
+
+    <div class="detail-section">
+
+        <h3>Job Description</h3>
+
+        <p>
+            {{ job.description|linebreaks }}
+        </p>
+
+    </div>
+
+
+    <div class="detail-section">
+
+        <h3>Posted By</h3>
+
+        <p>
+            {{ job.posted_by }}
+        </p>
+
+    </div>
+
+
+    <div style="margin-top: 35px;">
+
+        {% if user.is_authenticated %}
+
+            {% if already_applied %}
+
+                <span class="btn btn-secondary">
+                    ✓ Already Applied
+                </span>
+
+            {% else %}
+
+                <a
+                    href="{% url 'apply_to_job' job.pk %}"
+                    class="btn btn-success"
+                >
+                    Apply Now
+                </a>
+
+            {% endif %}
+
+            {% if job.posted_by == user %}
+
+                <a
+                    href="{% url 'job_update' job.pk %}"
+                    class="btn btn-primary"
+                >
+                    Edit Job
+                </a>
+
+                <a
+                    href="{% url 'job_delete' job.pk %}"
+                    class="btn btn-danger"
+                >
+                    Delete
+                </a>
+
+            {% endif %}
+
+        {% else %}
+
+            <a
+                href="/accounts/login/"
+                class="btn btn-primary"
+            >
+                Login to Apply
+            </a>
+
+        {% endif %}
+
+
+        <a
+            href="{% url 'job_list' %}"
+            class="btn btn-secondary"
+        >
+            ← Back to Jobs
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

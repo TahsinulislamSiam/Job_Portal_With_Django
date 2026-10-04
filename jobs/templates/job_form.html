@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{% if object %}
+Edit Job
+{% else %}
+Post a Job
+{% endif %}
+{% endblock %}
+
+
+{% block content %}
+
+<div class="form-container">
+
+    {% if object %}
+
+        <h1>Edit Job</h1>
+
+        <p style="color:#6b7280; margin-bottom:25px;">
+            Update the information about your job posting.
+        </p>
+
+    {% else %}
+
+        <h1>Post a New Job</h1>
+
+        <p style="color:#6b7280; margin-bottom:25px;">
+            Find the perfect candidate for your company.
+        </p>
+
+    {% endif %}
+
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+
+        <div style="margin-top:25px;">
+
+            <button
+                type="submit"
+                class="btn btn-primary"
+            >
+
+                {% if object %}
+                    Update Job
+                {% else %}
+                    Publish Job
+                {% endif %}
+
+            </button>
+
+
+            <a
+                href="{% url 'job_list' %}"
+                class="btn btn-secondary"
+            >
+                Cancel
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

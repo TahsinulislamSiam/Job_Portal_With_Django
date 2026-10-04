@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Login - JobPortal
+{% endblock %}
+
+
+{% block content %}
+
+<div class="form-container">
+
+    <h1>Welcome Back</h1>
+
+    <p style="color:#6b7280; margin-bottom:25px;">
+        Login to your JobPortal account.
+    </p>
+
+
+    {% if form.errors %}
+
+        <div class="alert">
+            Username or password is incorrect.
+            Please try again.
+        </div>
+
+    {% endif %}
+
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+
+        <button
+            type="submit"
+            class="btn btn-primary"
+            style="width:100%; margin-top:10px;"
+        >
+            Login
+        </button>
+
+    </form>
+
+
+    <p
+        style="
+        text-align:center;
+        margin-top:25px;
+        color:#6b7280;
+        "
+    >
+
+        Don't have an account?
+
+        <a
+            href="{% url 'register' %}"
+            style="color:#2563eb; font-weight:bold;"
+        >
+            Create Account
+        </a>
+
+    </p>
+
+</div>
+
+{% endblock %}

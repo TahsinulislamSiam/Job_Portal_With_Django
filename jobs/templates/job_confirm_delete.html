@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Delete Job
+{% endblock %}
+
+
+{% block content %}
+
+<div class="form-container" style="text-align:center;">
+
+    <h1 style="color:#dc2626;">
+        Delete Job?
+    </h1>
+
+    <p style="margin:20px 0; color:#6b7280;">
+
+        Are you sure you want to delete:
+
+    </p>
+
+    <h2>
+        "{{ object.title }}"
+    </h2>
+
+    <p style="margin-top:10px;">
+        {{ object.company_name }}
+    </p>
+
+
+    <form method="POST" style="margin-top:30px;">
+
+        {% csrf_token %}
+
+        <button
+            type="submit"
+            class="btn btn-danger"
+        >
+            Yes, Delete
+        </button>
+
+
+        <a
+            href="{% url 'job_detail' object.pk %}"
+            class="btn btn-secondary"
+        >
+            Cancel
+        </a>
+
+    </form>
+
+</div>
+
+{% endblock %}

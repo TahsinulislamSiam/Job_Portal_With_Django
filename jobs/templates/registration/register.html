@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Create Account - JobPortal
+{% endblock %}
+
+
+{% block content %}
+
+<div class="form-container">
+
+    <h1>Create Your Account</h1>
+
+    <p style="color:#6b7280; margin-bottom:25px;">
+        Join JobPortal and start finding your dream job.
+    </p>
+
+
+    {% if form.errors %}
+
+        <div class="alert">
+
+            Please correct the errors below.
+
+        </div>
+
+    {% endif %}
+
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+
+        <button
+            type="submit"
+            class="btn btn-primary"
+            style="width:100%; margin-top:10px;"
+        >
+            Create Account
+        </button>
+
+    </form>
+
+
+    <p
+        style="
+        text-align:center;
+        margin-top:25px;
+        color:#6b7280;
+        "
+    >
+
+        Already have an account?
+
+        <a
+            href="{% url 'login' %}"
+            style="color:#2563eb; font-weight:bold;"
+        >
+            Login
+        </a>
+
+    </p>
+
+</div>
+
+{% endblock %}

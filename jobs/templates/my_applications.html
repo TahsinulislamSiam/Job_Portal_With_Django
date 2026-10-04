@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block title %}
+My Applications - JobPortal
+{% endblock %}
+
+
+{% block content %}
+
+<div class="page-header">
+
+    <div>
+
+        <h1>My Applications</h1>
+
+        <p>
+            Track all the jobs you have applied for.
+        </p>
+
+    </div>
+
+</div>
+
+
+{% if applications %}
+
+<div class="table-container">
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>Job</th>
+
+                <th>Company</th>
+
+                <th>Location</th>
+
+                <th>Date Applied</th>
+
+                <th>Action</th>
+
+            </tr>
+
+        </thead>
+
+
+        <tbody>
+
+            {% for application in applications %}
+
+            <tr>
+
+                <td>
+                    <strong>
+                        {{ application.job.title }}
+                    </strong>
+                </td>
+
+
+                <td>
+                    {{ application.job.company_name }}
+                </td>
+
+
+                <td>
+                    {{ application.job.location }}
+                </td>
+
+
+                <td>
+                    {{ application.date_applied|date:"M d, Y" }}
+                </td>
+
+
+                <td>
+
+                    <a
+                        href="{% url 'job_detail' application.job.pk %}"
+                        class="btn btn-primary"
+                    >
+                        View Job
+                    </a>
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+
+{% else %}
+
+<div class="empty">
+
+    <h2>No Applications Yet</h2>
+
+    <p>
+        You haven't applied for any jobs yet.
+    </p>
+
+
+    <a
+        href="{% url 'job_list' %}"
+        class="btn btn-primary"
+    >
+        Browse Jobs
+    </a>
+
+</div>
+
+{% endif %}
+
+{% endblock %}

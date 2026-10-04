@@ -1,22 +1,54 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import (
+    ListView,
+    DetailView,
+    CreateView,
+    UpdateView,
+    DeleteView
+)
 from django.urls import reverse_lazy
 from .models import Job, Application
 from .forms import Jobform
+from django.contrib.auth.mixins import LoginRequiredMixin
+from accounts.forms import CustomUserCreationForm
+from django.contrib.auth import login
 
 
 # Create your views here.
+def register(request):
+
+    if request.method == 'POST':
+
+        form = CustomUserCreationForm(request.POST)
+
+        if form.is_valid():
+
+            user = form.save()
+
+            login(request, user)
+
+            return redirect('job_list')
+
+    else:
+
+        form = CustomUserCreationForm()
+
+    return render(
+        request,
+        'registration/register.html',
+        {'form': form}
+    )
 
 
 class JobListView(ListView):
     model=Job
-    template_name = '/jobs/templates/job_list.html'
+    template_name = 'job_list.html'
     context_object_name = 'all_jobs'
 
 class JobDetailView(DetailView):
     model=Job
-    template_name='/jobs/templates/job_detail.html '
+    template_name='job_detail.html'
     
     def get_context_data(self, **kwargs):
         context= super().get_context_data(**kwargs)
@@ -29,7 +61,7 @@ class JobDetailView(DetailView):
 class JobCreateView(LoginRequiredMixin, CreateView):
     model = Job
     form_class = Jobform
-    template_name = 'jobs/job_form.html'
+    template_name = 'job_form.html'
     success_url = reverse_lazy('job_list')
 
     def form_valid(self, form):
@@ -39,7 +71,7 @@ class JobCreateView(LoginRequiredMixin, CreateView):
 class JobUpdateView(LoginRequiredMixin, UpdateView):
     model = Job
     form_class = Jobform
-    template_name = 'jobs/job_form.html'
+    template_name = 'job_form.html'
     success_url = reverse_lazy('job_list')
 
     def get_queryset(self):
@@ -48,7 +80,7 @@ class JobUpdateView(LoginRequiredMixin, UpdateView):
 
 class JobDeleteView(LoginRequiredMixin, DeleteView):
     model = Job
-    template_name = 'jobs/job_confirm_delete.html'
+    template_name = 'job_confirm_delete.html'
     success_url = reverse_lazy('job_list')
 
     def get_queryset(self):
@@ -56,7 +88,7 @@ class JobDeleteView(LoginRequiredMixin, DeleteView):
     
 class MyJobListView(LoginRequiredMixin, ListView):
     model = Job
-    template_name = 'jobs/my_jobs.html'
+    template_name = 'my_jobs.html'
     context_object_name = 'my_jobs'
 
     def get_queryset(self):
